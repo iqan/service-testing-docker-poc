@@ -1,21 +1,29 @@
-﻿using Microsoft.Azure.ServiceBus;
+﻿using DummyService.App.Application.Handlers;
+using DummyService.App.Application.Interfaces;
+using DummyService.App.Application.Models;
+using Microsoft.Azure.ServiceBus;
 using Microsoft.Extensions.Logging;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DummyService.App
+namespace DummyService.App.Infrastructure.Messaging
 {
     public class MessageReceiver : IMessageReceiver
     {
         private ISubscriptionClient _subscriptionClient;
         private readonly ILogger<MessageReceiver> _logger;
         private readonly IEndpointConfiguration _endpointConfiguration;
+        private readonly IDummyEventHandler _dummyEventHandler;
 
-        public MessageReceiver(ILogger<MessageReceiver> logger, IEndpointConfiguration endpointConfiguration)
+        public MessageReceiver(
+            ILogger<MessageReceiver> logger, 
+            IEndpointConfiguration endpointConfiguration,
+            IDummyEventHandler dummyEventHandler)
         {
             _logger = logger;
             _endpointConfiguration = endpointConfiguration;
+            _dummyEventHandler = dummyEventHandler;
         }
 
         public void RegisterOnMessageHandlerAndReceiveMessages()
@@ -39,7 +47,10 @@ namespace DummyService.App
 
         private async Task ProcessMessagesAsync(Message message, CancellationToken token)
         {
-            _logger.LogInformation($"Received message: Body:{Encoding.UTF8.GetString(message.Body)}");
+            var body = Encoding.UTF8.GetString(message.Body);
+            _logger.LogInformation($"Received message: Body:{body}");
+            var @event = new DummyEvent { Text = body };
+            _dummyEventHandler.Handle(@event);
             await _subscriptionClient.CompleteAsync(message.SystemProperties.LockToken);
         }
 

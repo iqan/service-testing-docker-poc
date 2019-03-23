@@ -1,4 +1,4 @@
-﻿namespace DummyService.App
+﻿namespace DummyService.App.Application.Interfaces
 {
     public interface IMessageReceiver
     {

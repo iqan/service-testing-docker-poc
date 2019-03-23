@@ -1,4 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using DummyService.App.Application.Handlers;
+using DummyService.App.Application.Interfaces;
+using DummyService.App.Infrastructure.Messaging;
+using DummyService.App.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -32,6 +37,15 @@ namespace DummyService.App
                     {
                         return hostContext.Configuration.GetSection("EndpointConfiguration").Get<EndpointConfiguration>();
                     });
+
+                    services.AddDbContext<DummyDbContext>(options => 
+                    {
+                        options.UseSqlServer(hostContext.Configuration.GetConnectionString("DummyDatabase"));
+                    });
+
+                    services.AddScoped<IDatabaseService, DatabaseService>();
+
+                    services.AddScoped<IDummyEventHandler, DummyEventHandler>();
 
                     services.AddScoped<IMessageReceiver, MessageReceiver>();
 

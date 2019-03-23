@@ -1,4 +1,6 @@
-﻿namespace DummyService.App
+﻿using DummyService.App.Application.Interfaces;
+
+namespace DummyService.App.Infrastructure.Messaging
 {
     public class EndpointConfiguration : IEndpointConfiguration
     {
