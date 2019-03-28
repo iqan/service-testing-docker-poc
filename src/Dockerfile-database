@@ -9,4 +9,4 @@ WORKDIR /work
 
 RUN chmod 755 db.sh
 
-RUN ./db.sh RestoreDb.sql
+RUN ./db.sh CreateDb.sql

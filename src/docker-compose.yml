@@ -10,7 +10,7 @@ services:
       - EndpointConfiguration:ConnectionString=Endpoint=sb://iqanstest1.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=Mq5adsZtZmbt0J/4eYDFa1+P3Xj8yqr06ZJD+npSC4I=
       - EndpointConfiguration:Topic=topic1
       - EndpointConfiguration:Subscription=sub1
-      - ConnectionStrings:DummyDatabase=Server=db;Database=DummyDatabase;Trusted_Connection=True;User=sa;Password=SuperSecretPassword#1;
+      - ConnectionStrings:DummyDatabase=Server=db,1433;Database=DummyDatabase;Trusted_Connection=True;User=sa;Password=SuperSecretPassword#1;
     depends_on:
       - db
   db: 
@@ -20,8 +20,7 @@ services:
       dockerfile: Dockerfile-database
     environment:
       - SA_PASSWORD=SuperSecretPassword#1
-      - ACCEPT_EULA=Y
-    
+      - ACCEPT_EULA=
   dummyservice.tests:
     image: iqan/dummyservicetests
     build:
@@ -35,3 +34,4 @@ services:
     depends_on:
       - db
       - dummyservice.app
+    command: ["./wait-for-it.sh", "db:1433"]
