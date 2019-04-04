@@ -14,7 +14,7 @@ namespace DummyService.AcceptanceTests
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appSettings.json")
+                .AddJsonFile("appsettings.json")
                 .AddEnvironmentVariables();
 
             _configuration = builder.Build();

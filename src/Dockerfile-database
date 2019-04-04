@@ -4,6 +4,7 @@ RUN mkdir /work
 
 COPY CreateDb.sql /work
 COPY db.sh /work
+COPY db.bak /work
 
 WORKDIR /work
 

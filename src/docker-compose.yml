@@ -20,7 +20,7 @@ services:
       dockerfile: Dockerfile-database
     environment:
       - SA_PASSWORD=SuperSecretPassword#1
-      - ACCEPT_EULA=
+      - ACCEPT_EULA=Y
   dummyservice.tests:
     image: iqan/dummyservicetests
     build:
@@ -34,4 +34,4 @@ services:
     depends_on:
       - db
       - dummyservice.app
-    command: ["./wait-for-it.sh", "db:1433"]
+    command: ["./wait-for-it.sh", "db:1433", "-t", "30", "--", "dotnet", "test", "DummyService.AcceptanceTests.csproj"]

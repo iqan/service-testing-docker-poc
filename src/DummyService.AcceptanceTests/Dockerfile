@@ -11,4 +11,5 @@ WORKDIR "/src/DummyService.AcceptanceTests"
 RUN dotnet build "DummyService.AcceptanceTests.csproj" -c Release -o /app
 
 FROM build AS test
-ENTRYPOINT ["dotnet", "test", "DummyService.AcceptanceTests.csproj"]
+RUN chmod 777 wait-for-it.sh
+#ENTRYPOINT ["dotnet", "test", "DummyService.AcceptanceTests.csproj"]
