@@ -10,7 +10,7 @@ services:
       - EndpointConfiguration:ConnectionString=Endpoint=sb://iqanstest1.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=Mq5adsZtZmbt0J/4eYDFa1+P3Xj8yqr06ZJD+npSC4I=
       - EndpointConfiguration:Topic=topic1
       - EndpointConfiguration:Subscription=sub1
-      - ConnectionStrings:DummyDatabase=Server=db,1433;Database=DummyDatabase;Trusted_Connection=True;User=sa;Password=SuperSecretPassword#1;
+      - ConnectionStrings:DummyDatabase=Server=db;Database=DummyDatabase;User=sa;Password=SuperSecretPassword#1;
     depends_on:
       - db
   db: 
@@ -30,7 +30,7 @@ services:
       - EndpointConfiguration:ConnectionString=Endpoint=sb://iqanstest1.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=Mq5adsZtZmbt0J/4eYDFa1+P3Xj8yqr06ZJD+npSC4I=
       - EndpointConfiguration:Topic=topic1
       - EndpointConfiguration:Subscription=sub1
-      - ConnectionStrings:DummyDatabase=Server=db;Database=DummyDatabase;Trusted_Connection=True;User=sa;Password=SuperSecretPassword#1;
+      - ConnectionStrings:DummyDatabase=Server=db;Database=DummyDatabase;User=sa;Password=SuperSecretPassword#1;
     depends_on:
       - db
       - dummyservice.app
