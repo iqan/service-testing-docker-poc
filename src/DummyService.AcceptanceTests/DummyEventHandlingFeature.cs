@@ -53,6 +53,8 @@ namespace DummyService.AcceptanceTests
 
         private void IShouldGetMessageDataInsertedInDatabase()
         {
+            System.Threading.Thread.Sleep(5000);
+            
             var expectedText = _inMemoryStorage["text"];
 
             var messageData = GetMessageData();
