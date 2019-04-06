@@ -17,7 +17,7 @@ services:
     image: "iqan/dummydatabase"
     build:
       context: .
-      dockerfile: Dockerfile-database
+      dockerfile: DummyDatabase/Dockerfile
     environment:
       - SA_PASSWORD=SuperSecretPassword#1
       - ACCEPT_EULA=Y
