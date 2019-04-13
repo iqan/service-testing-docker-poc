@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DummyService.App", "DummySe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DummyService.AcceptanceTests", "DummyService.AcceptanceTests\DummyService.AcceptanceTests.csproj", "{C52EF7F6-19E8-4A28-910E-125999A4BC18}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{37D40A6B-DAC0-43AA-A42E-693F8DFC63B4}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{22596E1F-358C-47A8-A9BC-E85DC4DC3410}"
 	ProjectSection(SolutionItems) = preProject
 		CreateDb.sql = CreateDb.sql
