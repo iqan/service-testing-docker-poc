@@ -7,10 +7,10 @@ services:
       context: .
       dockerfile: DummyService.App/Dockerfile
     environment:
-      - EndpointConfiguration:ConnectionString=Endpoint=sb://iqanstest1.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=Mq5adsZtZmbt0J/4eYDFa1+P3Xj8yqr06ZJD+npSC4I=
-      - EndpointConfiguration:Topic=topic1
-      - EndpointConfiguration:Subscription=sub1
-      - ConnectionStrings:DummyDatabase=Server=db;Database=DummyDatabase;User=sa;Password=SuperSecretPassword#1;
+      - EndpointConfiguration:ConnectionString=<your-servicebus-connectionstring>
+      - EndpointConfiguration:Topic=<your-topic-name>
+      - EndpointConfiguration:Subscription=<your-subscription-name>
+      - ConnectionStrings:<your-db-connectionstring>
     depends_on:
       - db
   db: 
@@ -27,10 +27,10 @@ services:
       context: .
       dockerfile: DummyService.AcceptanceTests/Dockerfile
     environment:
-      - EndpointConfiguration:ConnectionString=Endpoint=sb://iqanstest1.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=Mq5adsZtZmbt0J/4eYDFa1+P3Xj8yqr06ZJD+npSC4I=
-      - EndpointConfiguration:Topic=topic1
-      - EndpointConfiguration:Subscription=sub1
-      - ConnectionStrings:DummyDatabase=Server=db;Database=DummyDatabase;User=sa;Password=SuperSecretPassword#1;
+      - EndpointConfiguration:ConnectionString=<your-servicebus-connectionstring>
+      - EndpointConfiguration:Topic=<your-topic-name>
+      - EndpointConfiguration:Subscription=<your-subscription-name>
+      - ConnectionStrings:<your-db-connectionstring>
     depends_on:
       - db
       - dummyservice.app
