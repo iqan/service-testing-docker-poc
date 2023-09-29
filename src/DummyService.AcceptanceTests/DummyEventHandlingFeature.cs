@@ -1,12 +1,11 @@
 using DummyService.AcceptanceTests.Data;
 using DummyService.AcceptanceTests.Data.Entities;
 using FluentAssertions;
-using Microsoft.Azure.ServiceBus;
+using Azure.Messaging.ServiceBus;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using TestStack.BDDfy;
-using TestStack.BDDfy.Xunit;
 using Xunit;
 
 namespace DummyService.AcceptanceTests
@@ -37,18 +36,18 @@ namespace DummyService.AcceptanceTests
         private void ISendDummyEvent()
         {
             var text = "Some dummy text";
-            var message = new Message(System.Text.Encoding.UTF8.GetBytes(text));
+            var message = new ServiceBusMessage(System.Text.Encoding.UTF8.GetBytes(text));
             SendMessage(message);
             _inMemoryStorage.Add("text", text);
         }
 
-        private void SendMessage(Message message)
+        private void SendMessage(ServiceBusMessage message)
         {
             var connectionString = ConfigurationReader.GetConfigValueFor("EndpointConfiguration:ConnectionString");
             var topic = ConfigurationReader.GetConfigValueFor("EndpointConfiguration:Topic");
 
-            var client = new TopicClient(connectionString, topic);
-            client.SendAsync(message).GetAwaiter().GetResult();
+            var client = new ServiceBusClient(connectionString).CreateSender(topic);
+            client.SendMessageAsync(message).GetAwaiter().GetResult();
         }
 
         private void IShouldGetMessageDataInsertedInDatabase()

@@ -1,53 +1,41 @@
-﻿using DummyService.App.Application.Interfaces;
+﻿using DummyService.App.Application.Messaging;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DummyService.App
 {
-    public class TimedHostedService : IHostedService, IDisposable
+    public class TimedHostedService : BackgroundService
     {
         private readonly ILogger _logger;
-        private readonly IMessageReceiver _messageReceiver;
-        private Timer _timer;
+        private readonly IMessageProcessor _messageProcessor;
 
-        public TimedHostedService(ILogger<TimedHostedService> logger, IMessageReceiver messageReceiver)
+        public TimedHostedService(ILogger<TimedHostedService> logger, IMessageProcessor messageProcessor)
         {
             _logger = logger;
-            _messageReceiver = messageReceiver;
+            _messageProcessor = messageProcessor;
         }
 
-        public Task StartAsync(CancellationToken cancellationToken)
+        public override Task StartAsync(CancellationToken cancellationToken)
         {
             _logger.LogInformation("Service is starting.");
-
-            _timer = new Timer(DoWork, null, TimeSpan.Zero,
-                TimeSpan.FromSeconds(5));
-
-            _messageReceiver.RegisterOnMessageHandlerAndReceiveMessages();
-
-            return Task.CompletedTask;
+            return _messageProcessor.StartProcessingAsync();
         }
 
-        private void DoWork(object state)
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            _logger.LogInformation("Service is running.");
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                _logger.LogInformation("Service is running.");
+                await Task.Delay(1000, stoppingToken);
+            }
         }
 
-        public Task StopAsync(CancellationToken cancellationToken)
+        public override Task StopAsync(CancellationToken cancellationToken)
         {
             _logger.LogInformation("Service is stopping.");
-
-            _timer?.Change(Timeout.Infinite, 0);
-
-            return Task.CompletedTask;
-        }
-
-        public void Dispose()
-        {
-            _timer?.Dispose();
+            return _messageProcessor.StopProcessingAsync();
         }
     }
 }

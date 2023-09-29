@@ -1,6 +1,6 @@
 echo "Setting Environment variables."
 export ACCEPT_EULA=Y
-export SA_PASSWORD=SuperSecretPassword#1
+export MSSQL_SA_PASSWORD=SuperSecretPassword#1
 echo "Environment variables set."
 echo "Starting SqlServr"
 /opt/mssql/bin/sqlservr &

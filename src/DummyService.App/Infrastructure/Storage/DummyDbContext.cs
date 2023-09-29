@@ -1,10 +1,7 @@
-﻿using DummyService.App.Infrastructure.Persistence.Entities;
+﻿using DummyService.App.Infrastructure.Storage.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace DummyService.App.Infrastructure.Persistence
+namespace DummyService.App.Infrastructure.Storage
 {
     public class DummyDbContext : DbContext
     {

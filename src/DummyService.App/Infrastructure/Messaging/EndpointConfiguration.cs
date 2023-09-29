@@ -1,4 +1,4 @@
-﻿using DummyService.App.Application.Interfaces;
+﻿using DummyService.App.Application.Messaging;
 
 namespace DummyService.App.Infrastructure.Messaging
 {

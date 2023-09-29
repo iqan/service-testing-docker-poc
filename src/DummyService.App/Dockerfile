@@ -1,7 +1,7 @@
-FROM microsoft/dotnet:2.2-runtime-stretch-slim AS base
+FROM mcr.microsoft.com/dotnet/runtime:7.0 AS base
 WORKDIR /app
 
-FROM microsoft/dotnet:2.2-sdk-stretch AS build
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["DummyService.App/DummyService.App.csproj", "DummyService.App/"]
 RUN dotnet restore "DummyService.App/DummyService.App.csproj"

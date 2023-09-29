@@ -1,28 +1,25 @@
-﻿using DummyService.App.Application.Interfaces;
-using DummyService.App.Application.Models;
+﻿using DummyService.App.Application.Models;
+using DummyService.App.Application.Storage;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DummyService.App.Application.Handlers
 {
     public class DummyEventHandler : IDummyEventHandler
     {
         private readonly ILogger _logger;
-        private readonly IDatabaseService _databaseService;
+        private readonly IMessageDatabase _messageDatabase;
 
-        public DummyEventHandler(ILogger<DummyEventHandler> logger, IDatabaseService databaseService)
+        public DummyEventHandler(ILogger<DummyEventHandler> logger, IMessageDatabase messageDatabase)
         {
             _logger = logger;
-            _databaseService = databaseService;
+            _messageDatabase = messageDatabase;
         }
 
         public void Handle(DummyEvent dummyEvent)
         {
             _logger.LogInformation("Handling event");
 
-            _databaseService.InsertMessageData(new MessageDataDto
+            _messageDatabase.InsertMessageData(new MessageDataDto
             {
                 MessageText = dummyEvent.Text
             });

@@ -1,5 +1,3 @@
-version: '3.4'
-
 services:
   dummyservice.app:
     image: iqan/dummyserviceapp
@@ -7,30 +5,32 @@ services:
       context: .
       dockerfile: DummyService.App/Dockerfile
     environment:
-      - EndpointConfiguration:ConnectionString=<your-servicebus-connectionstring>
-      - EndpointConfiguration:Topic=<your-topic-name>
-      - EndpointConfiguration:Subscription=<your-subscription-name>
-      - ConnectionStrings:<your-db-connectionstring>
+      - EndpointConfiguration:ConnectionString=Endpoint=sb://iqansbus1.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=+0SZhl+Ok3xaoW2zHu3OCoTk3WyVzdS9O+ASbEqAarM= #<your-servicebus-connectionstring>
+      - EndpointConfiguration:Topic=topic1
+      - EndpointConfiguration:Subscription=sub1
+      - ConnectionStrings:DummyDatabase=Server=db;Database=DummyDatabase;User=sa;Password=SuperSecretPassword#1;TrustServerCertificate=true
     depends_on:
       - db
   db: 
-    image: "iqan/dummydatabase"
+    image: iqan/dummydatabase
     build:
       context: .
-      dockerfile: DummyDatabase/Dockerfile
+      dockerfile: DummyService.Database/Dockerfile
     environment:
-      - SA_PASSWORD=SuperSecretPassword#1
+      - MSSQL_SA_PASSWORD=SuperSecretPassword#1
       - ACCEPT_EULA=Y
+    ports:
+      - "1433:1433"
   dummyservice.tests:
     image: iqan/dummyservicetests
     build:
       context: .
       dockerfile: DummyService.AcceptanceTests/Dockerfile
     environment:
-      - EndpointConfiguration:ConnectionString=<your-servicebus-connectionstring>
-      - EndpointConfiguration:Topic=<your-topic-name>
-      - EndpointConfiguration:Subscription=<your-subscription-name>
-      - ConnectionStrings:<your-db-connectionstring>
+      - EndpointConfiguration:ConnectionString=Endpoint=sb://iqansbus1.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=+0SZhl+Ok3xaoW2zHu3OCoTk3WyVzdS9O+ASbEqAarM= # <your-servicebus-connectionstring>
+      - EndpointConfiguration:Topic=topic1
+      - EndpointConfiguration:Subscription=sub1
+      - ConnectionStrings:DummyDatabase=Server=db;Database=DummyDatabase;User=sa;Password=SuperSecretPassword#1;TrustServerCertificate=true
     depends_on:
       - db
       - dummyservice.app

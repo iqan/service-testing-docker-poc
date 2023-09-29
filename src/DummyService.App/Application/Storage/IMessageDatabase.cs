@@ -1,8 +1,8 @@
 ﻿using DummyService.App.Application.Models;
 
-namespace DummyService.App.Application.Interfaces
+namespace DummyService.App.Application.Storage
 {
-    public interface IDatabaseService
+    public interface IMessageDatabase
     {
         void InsertMessageData(MessageDataDto messageData);
     }

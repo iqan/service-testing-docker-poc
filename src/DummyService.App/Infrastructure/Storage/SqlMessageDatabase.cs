@@ -1,19 +1,16 @@
-﻿using DummyService.App.Application.Interfaces;
-using DummyService.App.Application.Models;
-using DummyService.App.Infrastructure.Persistence.Entities;
+﻿using DummyService.App.Application.Models;
+using DummyService.App.Application.Storage;
+using DummyService.App.Infrastructure.Storage.Entities;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace DummyService.App.Infrastructure.Persistence
+namespace DummyService.App.Infrastructure.Storage
 {
-    public class DatabaseService : IDatabaseService
+    public class SqlMessageDatabase : IMessageDatabase
     {
         private readonly ILogger _logger;
         private readonly DummyDbContext _context;
 
-        public DatabaseService(ILogger<DatabaseService> logger, DummyDbContext context)
+        public SqlMessageDatabase(ILogger<SqlMessageDatabase> logger, DummyDbContext context)
         {
             _logger = logger;
             _context = context;

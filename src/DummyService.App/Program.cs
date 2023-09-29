@@ -1,7 +1,8 @@
 ﻿using DummyService.App.Application.Handlers;
-using DummyService.App.Application.Interfaces;
+using DummyService.App.Application.Messaging;
+using DummyService.App.Application.Storage;
 using DummyService.App.Infrastructure.Messaging;
-using DummyService.App.Infrastructure.Persistence;
+using DummyService.App.Infrastructure.Storage;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -43,13 +44,13 @@ namespace DummyService.App
                         options.UseSqlServer(hostContext.Configuration.GetConnectionString("DummyDatabase"));
                     });
 
-                    services.AddScoped<IDatabaseService, DatabaseService>();
+                    services.AddScoped<IMessageDatabase, SqlMessageDatabase>();
 
                     services.AddScoped<IDummyEventHandler, DummyEventHandler>();
 
-                    services.AddScoped<IMessageReceiver, MessageReceiver>();
+                    services.AddScoped<IMessageProcessor, MessageProcessor>();
 
-                    services.AddScoped<IHostedService, TimedHostedService>();
+                    services.AddHostedService<TimedHostedService>();
                 });
 
             await hostBuilder.RunConsoleAsync();

@@ -27,7 +27,7 @@ namespace DummyService.AcceptanceTests
 
         public static string GetConfigValueFor(string key)
         {
-            return _configuration.GetValue<string>(key);
+            return _configuration[key];
         }
     }
 }
